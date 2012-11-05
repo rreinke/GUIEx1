@@ -14,7 +14,9 @@ public class HealthPanel extends JPanel {
 	ButtonGroup two = new ButtonGroup();
 	ButtonGroup three = new ButtonGroup();
 	FeedbackPanel fp;
-	JRadioListener listener = new JRadioListener();
+	HeightListener heightListener = new HeightListener();
+	WeightListener weightListener = new WeightListener();
+	SmokingListener smokingListener = new SmokingListener();
 
 	public HealthPanel(FeedbackPanel fp)
 	{
@@ -27,11 +29,11 @@ public class HealthPanel extends JPanel {
 		heightAverage = new JRadioButton("Average");
 		tall = new JRadioButton("Tall");
 		one.add(heightShort);
-		heightShort.addActionListener(listener);
+		heightShort.addActionListener(heightListener);
 		one.add(heightAverage);
-		heightAverage.addActionListener(listener);
+		heightAverage.addActionListener(heightListener);
 		one.add(tall);
-		tall.addActionListener(listener);
+		tall.addActionListener(heightListener);
 		first.add(heightShort);
 		first.add(heightAverage);
 		first.add(tall);
@@ -48,19 +50,19 @@ public class HealthPanel extends JPanel {
 		two.add(hefty);
 		weightAverage.setSelected(true);
 		second.add(thin);
-		thin.addActionListener(listener);
+		thin.addActionListener(weightListener);
 		second.add(weightAverage);
-		weightAverage.addActionListener(listener);
+		weightAverage.addActionListener(weightListener);
 		second.add(hefty);
-		hefty.addActionListener(listener);
+		hefty.addActionListener(weightListener);
 		second.setBorder(new TitledBorder(new EtchedBorder(), "Weight"));
 
 		JPanel third = new JPanel();
 		add(third);
 		smokes = new JRadioButton("Smokes");
-		smokes.addActionListener(listener);
+		smokes.addActionListener(smokingListener);
 		noSmokes = new JRadioButton("noSmokes");
-		noSmokes.addActionListener(listener);
+		noSmokes.addActionListener(smokingListener);
 		three.add(smokes);
 		three.add(noSmokes);
 		noSmokes.setSelected(true);
@@ -69,7 +71,7 @@ public class HealthPanel extends JPanel {
 		third.setBorder(new TitledBorder(new EtchedBorder(), "Smokes"));
 	}
 
-	private class JRadioListener implements ActionListener {
+	private class HeightListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if(heightShort.isSelected())
 			{
@@ -80,7 +82,7 @@ public class HealthPanel extends JPanel {
 			} else if(tall.isSelected())
 			{
 				fp.setTall("How is the weather up there?");
-			} else if(thin.isSelected())
+			} /*else if(thin.isSelected())
 			{
 				fp.setThin("Ever heard of ice cream?");
 			} else if(weightAverage.isSelected())
@@ -95,8 +97,36 @@ public class HealthPanel extends JPanel {
 			} else if(noSmokes.isSelected())
 			{
 				fp.setNoSmokes("Well done young grasshopper");
+			}*/
+		}
+	}
+
+
+		private class WeightListener implements ActionListener {
+			public void actionPerformed(ActionEvent e) {
+				if(thin.isSelected())
+				{
+					fp.setThin("Ever heard of ice cream?");
+				} else if(weightAverage.isSelected())
+				{
+					fp.setWeightAverage("Just right!");
+				} else if(hefty.isSelected())
+				{
+					fp.setHefty("More of you to love!");
+				} 
+			}
+		}
+		
+		private class SmokingListener implements ActionListener {
+			public void actionPerformed(ActionEvent e) {
+				if(smokes.isSelected())
+				{
+					fp.setSmokes("Why?!?!");
+				} else if(noSmokes.isSelected())
+				{
+					fp.setNoSmokes("Well done young grasshopper");
+				}
 			}
 		}
 	}
 
-}
